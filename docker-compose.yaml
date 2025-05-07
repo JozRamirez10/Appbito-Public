@@ -1,0 +1,51 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+      MYSQL_DATABASE: appbito
+    volumes:
+      - data-mysql:/var/lib/mysql
+    networks:
+      - appbito-net
+
+  appbito-backend:
+    container_name: appbito-backend
+    image: jmramglez/appbito-backend
+    ports:
+      - "8001:8001"
+    env_file: ./backend/appbito/.env
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - appbito-net
+    depends_on:
+      - mysql
+    restart: always
+  
+  appbito-frontend:
+    container_name: appbito-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      - appbito-net
+    depends_on:
+      - appbito-backend
+    restart: always
+  
+volumes:
+  data-mysql:
+    name: data-mysql
+
+networks:
+  appbito-net:
+    name: appbito-net

@@ -1,0 +1,9 @@
+<div class="monthlyProgress monthlyProgress-height" style="width: 100%;">
+    <div class="monthlyProgress-header">
+        <button class="rounded" (click)="prevYear()">&#8249;</button>
+        <span>{{ currentDay.getFullYear() }}</span>
+        <button class="rounded" (click)="nextYear()">&#8250;</button>
+    </div>
+
+    <canvas #chartCanvas>{{chart}}</canvas>
+</div>

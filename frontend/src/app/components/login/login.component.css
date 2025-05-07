@@ -1,0 +1,13 @@
+@media (max-width: 1201px) { /* Para celulares */
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+    .card-header, .card-body {
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+    }
+}

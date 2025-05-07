@@ -1,0 +1,19 @@
+.monthlyProgress{
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    background-color: #2c2c34;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.monthlyProgress-height {
+    height: 500px;
+}
+
+.monthlyProgress-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 10px; */
+}

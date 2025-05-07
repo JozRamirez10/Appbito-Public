@@ -1,0 +1,104 @@
+<div class="card">
+
+    <div class="card-header">
+        <div class="text-end">
+            <button type="button" class="btn btn-danger" [routerLink]="['/dailyHabits']">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <div class="card-body">
+
+        @if(loading){
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }@else {
+            <div>
+                <div class="profile-container">
+    
+    
+                    @if(user.image){
+                        <img [src]="user.imageProfile" class="rounded-circle mx-auto d-block profile-image" alt="image-user" width="150" height="150">
+                    }@else {
+                        <img src="/img/image-user-default.jpg" class="rounded-circle mx-auto d-block profile-image" alt="image-user" width="150" height="150">
+                    }
+    
+                    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Edit image</h1>
+                                    <button type="button" class="btn-close" #closeModal data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <input class="form-control" type="file" id="formFile"
+                                            (change)="onFileSelected($event)" accept=".png,.jpg,.jpge">
+                                        @if(fileError){
+                                            <small class="text-danger">{{fileError}}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" (click)="onSaveImage($event)" [disabled]="!selectedFile">
+                                        Save changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <button type="button" class="edit-image-btn" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                        </svg>
+                    </button>
+                
+                </div>
+    
+                <div class="text-center fw-bold mt-3 mb-1">
+                    {{nameUser}} {{lastnameUser}}
+                </div>
+                <div class="text-center fw-lighter fst-italic mb-4">
+                    {{emailUser}}
+                </div>
+            </div>
+    
+            <div class="container my-2 mx-auto w-75">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#dataTab">Data</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#passwordTab">Password</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link text-danger" data-bs-toggle="tab" data-bs-target="#deleteTab">Delete account</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="dataTab">
+                        <app-user-form-data></app-user-form-data>
+                    </div>
+                    <div class="tab-pane fade" id="passwordTab">
+                        <app-user-form-password></app-user-form-password>
+                    </div>
+                    <div class="tab-pane fade" id="deleteTab">
+                        <app-user-form-delete></app-user-form-delete>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

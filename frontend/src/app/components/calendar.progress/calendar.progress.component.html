@@ -1,0 +1,52 @@
+<div class="calendar">
+    
+    <div class="calendar-header">
+      <button type="button" (click)="prevMonth()">&#8249;</button>
+      <span>{{ monthNames[currentDate.getMonth()] }} {{ currentDate.getFullYear() }}</span>
+      <button type="button" (click)="nextMonth()">&#8250;</button>
+    </div>
+
+    <div class="weekdays">
+        @for(day of weekDays; track $index){
+            <div class="text-center">{{ day }}</div>
+        }
+    </div>
+    
+    <div class="days">
+        @for(day of daysInMonth; track $index){
+            @let done = getDone(day, habitProgress);
+            @let note = hasNote(day, habitProgress);
+            @let verify = !edit ? note : true;
+            <div class="day" [class.selected]="isToday(day)"
+                [attr.data-bs-toggle]="verify && day !== null ? 'offcanvas' : null"
+                [attr.data-bs-target]="verify && day !== null ? '#habitProgressCanvas' : null" 
+                aria-controls="habitProgressCanvas"
+                (click)="loadHabitProgress(habit, day)">
+                <div [class.done]="done > 0">
+                    {{ day ? day.getDate() : '' }}
+                    <div [ngClass]="{'d-flex justify-content-center': done > 1}">
+                        @if(done > 1){
+                            <div class="text-warning">{{done}}</div>
+                        }
+                        @if(note){
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="yellow" class="bi bi-journal-text" viewBox="0 0 16 16">
+                                    <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                                </svg>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<app-detail-habit-progress class="offcanvas offcanvas-end offcanvas-width" tabindex="-1" 
+    id="habitProgressCanvas" 
+    aria-labelledby="offHabitProgressCanvas"
+    [edit]="edit"
+    >

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AppbitoApplication<appbito>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.appbito.appbito.AppbitoApplication",
+            "projectName": "appbito",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

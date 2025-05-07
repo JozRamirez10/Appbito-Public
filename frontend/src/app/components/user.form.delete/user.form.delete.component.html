@@ -1,0 +1,47 @@
+<div class="my-2 position-text">
+    <form (ngSubmit)="onSubmit(deleteForm)" #deleteForm="ngForm">
+    
+        <div class="row mb-3">
+            <label for="current-password" class="col-sm-4 col-form-label">Current pasword</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="current-password"
+                    [(ngModel)]="this.password" name="password" #password="ngModel" required>
+                    @if(password.invalid && (password.dirty || password.touched || deleteForm.submitted)){
+                        @if(password.errors!['required']){
+                            <div class="text-danger">
+                                Password is required
+                            </div>
+                        }
+                    }
+                    @if(passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched || deleteForm.submitted)){
+                        @if(password.errors!['required']){
+                            <div class="text-danger">
+                                Password doesn't macth
+                            </div>
+                        }
+                    }
+                    @if(!matches){
+                        <div class="text-danger text-start">Password doesn't match</div>
+                    }
+            </div>
+        </div>
+    
+        <div class="row mb-3">
+            <label for="new-password-confirmation" class="col-sm-4 col-form-label">Confirm password</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="password-confirmation"
+                    [(ngModel)]="this.passwordConfirm" name="passwordConfirm" #passwordConfirm="ngModel" required>
+                    @if(passwordConfirmEmpty){
+                        <div class="text-danger text-start">Must not be empty</div>
+                    }
+            </div>
+        </div>
+
+        <div class="my-2 mx-auto">
+            <div class="mt-4 mb-3 text-center">
+                <input type="submit" value="Delete account" class="btn btn-outline-danger">
+            </div>
+        </div>
+    
+    </form>
+</div>

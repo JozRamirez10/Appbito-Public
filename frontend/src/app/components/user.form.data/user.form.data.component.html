@@ -1,0 +1,134 @@
+<form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
+
+    <div class="px-4">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <div class="my-3 row">
+                    <label for="user-name" class="col-3 col-form-label fw-bold">Name</label>
+                    <div class="col">
+                        <input type="text" id="user-name"
+                            [ngClass]="isEdit('name') ? 'form-control' : 'form-control-plaintext'"
+                            [disabled]="!isEdit('name')"
+                            [(ngModel)]="user.name" name="name" #name="ngModel" required
+                            >
+                            @if(name.invalid && (name.dirty || name.touched || userForm.submitted)){
+                                @if(name.errors!['required']){
+                                    <div class="text-danger">
+                                        The name is required
+                                    </div>
+                                }
+                            }
+                            @if(errors?.name){
+                                <div class="text-danger">{{errors.name}}</div>
+                            }
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-primary"  
+                            [ngClass]="isEdit('name') ? 'btn-warning' : 'bnt-primary' "
+                            [attr.type]="isEdit('name') ? 'submit' : 'button'"
+                            (click)="btnEdit( (name.invalid || lastname.invalid) ? '' : 'name')">
+                            @if(isEdit('name')){
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-floppy" viewBox="0 0 16 16">
+                                    <path d="M11 2H9v3h2z"/>
+                                    <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+                                </svg>
+                            }@else{
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                </svg>
+                            }
+                        </button>
+                    </div>
+                </div>
+            </li>
+        
+            <li class="list-group-item">
+                <div class="my-3 row">
+                    <label for="user-lastname" class="col-3 col-form-label fw-bold">Lastname</label>
+                    <div class="col">
+                        <input type="text" id="user-lastname" 
+                            [ngClass]="isEdit('lastname') ? 'form-control' : 'form-control-plaintext'"
+                            [disabled]="!isEdit('lastname')"
+                            [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel"
+                            required>
+                            @if(lastname.invalid && (lastname.dirty || lastname.touched || userForm.submitted)){
+                                @if(lastname.errors!['required']){
+                                    <div class="text-danger">
+                                        The lastname is required
+                                    </div>
+                                }
+                            }
+                            @if(errors?.lastname){
+                                <div class="text-danger">{{errors.lastname}}</div>
+                            }
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-primary"
+                            [ngClass]="isEdit('lastname') ? 'btn-warning' : 'bnt-primary' "
+                            [attr.type]="isEdit('lastname') ? 'submit' : 'button'"
+                            (click)="btnEdit( (name.invalid || lastname.invalid) ? '' : 'lastname')">
+                            @if(isEdit('lastname')){
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-floppy" viewBox="0 0 16 16">
+                                    <path d="M11 2H9v3h2z"/>
+                                    <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+                                </svg>
+                            }@else{
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                </svg>
+                            }
+                        </button>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="list-group-item">
+                <div class="my-3 row">
+                    <label for="user-date" class="col-3 col-form-label fw-bold">Date</label>
+                    <div class="col">
+                        <input type="date" id="user-date"
+                            [ngClass]="isEdit('date') ? 'form-control' : 'form-control-plaintext'"
+                            [disabled]="!isEdit('date')" 
+                            [(ngModel)]="user.date" name="date" #date="ngModel" >
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-primary"
+                            [ngClass]="isEdit('date') ? 'btn-warning' : 'bnt-primary' "
+                            [attr.type]="isEdit('date') ? 'submit' : 'button'"
+                            (click)="btnEdit( (name.invalid || lastname.invalid) ? '': 'date' )">
+                            @if(isEdit('date')){
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-floppy" viewBox="0 0 16 16">
+                                    <path d="M11 2H9v3h2z"/>
+                                    <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+                                </svg>
+                            }@else{
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                </svg>
+                            }
+                        </button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-group-item">
+                <div class="my-2 mx-auto">
+                    <div class="mt-4 mb-3 text-center">
+                        <input type="button" value="Logout" class="btn btn-outline-danger"
+                            (click)="handlerLogout()">
+                    </div>
+                </div>
+            </li>
+            
+        </ul>
+
+    </div>
+
+</form>

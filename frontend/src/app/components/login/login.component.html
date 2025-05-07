@@ -1,0 +1,41 @@
+<div class="text-center mt-3 mb-5">
+    <h1>Appbito</h1>
+</div>
+
+<div class="card mt-4 w-75 mx-auto">
+    <div class="card-header text-center">
+        <h4>Login</h4>
+    </div>
+    <div class="card-body px-5">
+        
+        <form (ngSubmit)="onSubmit()">
+            
+            <p [ngClass]="{'alert alert-danger' : message}">
+                {{message}}
+            </p>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email"
+                    [(ngModel)]="user.email" name="email">
+                <label for="email">Email</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password"
+                [(ngModel)]="user.password" name="password">
+                <label for="password">Password</label>
+            </div>
+
+            <div class="text-center row mx-4 mb-3">
+                <input type="submit" class="btn btn-primary" value="Login">
+            </div>
+            
+            <div class="text-center">
+                <a [routerLink]="['/signIn']">
+                    Sign in
+                </a>
+            </div>
+        
+        </form>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="calendar">
+    <div class="calendar-header">
+        <button (click)="prevWeek()">&#8249;</button>
+        <span>{{ monthNames[currentDay.getMonth()] }} {{ currentDay.getFullYear() }}</span>
+        <button (click)="nextWeek()">&#8250;</button>
+    </div>
+
+    <div class="weekdays-habit">
+        @for(day of weekDays; track $index){
+            <div>{{day}}</div>
+        }
+    </div>
+
+    <div class="days-habit">
+        @for(habit of habits; track habit.id; let habitIndex = $index){
+            <div class="d-flex align-items-center justify-content-center">
+                {{habit.name}}
+            </div>
+            @for(day of daysInWeek; track $index){
+                @let done = getDone(day, habit.habitProgress);
+                <div class="day" [class.selected]="isToday(day)"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#habitProgressCanvas" 
+                    aria-controls="habitProgressCanvas"
+                    (click)="loadHabitProgress(habit, day)"
+                    >
+                    <div [class.done]="done > 0" 
+                        [ngClass]="{'row': done > 1}">
+                        @if(done > 1){
+                            <div class="col">
+                                {{done}} 
+                            </div>
+                        }
+                        @if(hasNote(day, habit.habitProgress)){
+                            <div class="col">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="yellow" class="bi bi-journal-text" viewBox="0 0 16 16">
+                                    <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                                </svg>
+                            </div>
+                        }
+                    </div>
+                </div> 
+            }
+        }
+    </div>
+
+</div>
+
+

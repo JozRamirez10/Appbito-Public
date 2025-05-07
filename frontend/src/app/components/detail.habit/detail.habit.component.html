@@ -1,0 +1,111 @@
+<li class="list-group-item">   
+    
+        <div class="row my-2">
+            <div class="col fw-bold d-flex align-items-center">
+                {{habit.name}}
+            </div>
+    
+            <div class="col d-flex justify-content-end">
+    
+                <div class="btn btn-warning me-1" (click)="buttonViewProgress()">
+                    @if(viewProgress){
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-calendar-check-fill" viewBox="0 0 16 16">
+                            <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-5.146-5.146-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
+                        </svg>
+                    }@else{
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                            <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                        </svg>    
+                    }
+                </div>
+    
+    
+                <button class="btn btn-primary mx-1" [routerLink]="['/habit', habit.id, 'edit']">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                    </svg>
+                </button>
+    
+                <button class="btn btn-danger mx-1" (click)="remove(habit.id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                    </svg>
+                </button>
+            </div>
+            
+    
+        </div>
+        
+        <div class="card my-2">
+            <div class="card-body">
+                <div class="row">
+                    @if(habit.description || habit.hour){
+                        <div class="col-6" [ngClass]="!habit.hour ? 'd-flex align-items-center' : '' ">
+                            <div class="mb-2">
+                                {{habit.description}}
+                            </div>
+                        @if(habit.hour){
+                            <div>
+                                <ul>
+                                    <li>
+                                        {{habit.hour}}
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    }
+                    <div class="col-6">
+                            @if(
+                                habit.days.includes(daysOfWeek.MONDAY) &&
+                                habit.days.includes(daysOfWeek.TUESDAY) &&
+                                habit.days.includes(daysOfWeek.WEDNESDAY) &&
+                                habit.days.includes(daysOfWeek.THURSDAY) &&
+                                habit.days.includes(daysOfWeek.FRIDAY) &&                            
+                                habit.days.includes(daysOfWeek.SATURDAY) &&                            
+                                habit.days.includes(daysOfWeek.SUNDAY)
+                            ){
+                                <div class="h-100 d-flex align-items-center justify-content-center">
+                                    All Week
+                                </div>
+                            } @else if(
+                                habit.days.includes(daysOfWeek.MONDAY) &&
+                                habit.days.includes(daysOfWeek.TUESDAY) &&
+                                habit.days.includes(daysOfWeek.WEDNESDAY) &&
+                                habit.days.includes(daysOfWeek.THURSDAY) &&
+                                habit.days.includes(daysOfWeek.FRIDAY)
+                            ) {
+                                <div class="h-100 d-flex align-items-center justify-content-center">
+                                    Weekdays
+                                </div>
+                            } @else if(
+                                habit.days.includes(daysOfWeek.SATURDAY) &&                            
+                                habit.days.includes(daysOfWeek.SUNDAY)
+                            ) {
+                                <div class="h-100 d-flex align-items-center justify-content-center">
+                                    Weekend
+                                </div>
+                            } @else {
+                                @for(day of habit.days; track $index){
+                                    <ul>
+                                        <li>{{day}}</li>
+                                    </ul>
+                                }
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    @if(habit.habitProgress.length > 0 && viewProgress){
+        <app-progress-habit [habitId]="habit.id" [habitProgress]="habit.habitProgress" [edit]="false"></app-progress-habit>
+    }@else if(viewProgress){
+        <div class="alert alert-warning">
+            Not progress this month...
+        </div>
+    }                
+            
+</li>

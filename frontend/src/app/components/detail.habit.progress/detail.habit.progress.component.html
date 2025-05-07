@@ -1,0 +1,82 @@
+<div class="offcanvas-header d-flex align-items-center justify-content-between">
+    <div class="ps-2">
+        <h4 class="offcanvas-title" id="offHabitProgressCanvas">{{habit.name}}</h4>
+        <h6 class="fst-italic mt-1 ps-2">{{day | date:'fullDate'}}</h6>
+    </div>
+    <div class="">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="offcanvas" aria-label="Close" #closeButton>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+        </button>
+    </div>
+</div>
+<hr>
+<div class="offcanvas-body">
+    <form (ngSubmit)="onSubmit(habitProgressForm)" #habitProgressForm="ngForm">
+        @if(edit){
+            <div class="mb-3 mx-4">
+                <h5 class="mb-3">
+                    Done
+                </h5>
+                <div class="">
+                    <div class="row d-flex align-items-center mx-3">
+                        <button type="button" class="col btn btn-secondary btn-sm" (click)="setDone('-')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-dash" viewBox="0 0 16 16">
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="col text-center">
+                            <input [(ngModel)]="habitProgress.timesPerformed" 
+                                name="timesPerformed" 
+                                #timesPerformed="ngModel"
+                                class="text-center form-control-plaintext"
+                                disabled
+                                >
+                        </div>
+                    
+                        <button type="button" class="col btn btn-secondary btn-sm" (click)="setDone('+')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        }
+
+        <div class="mb-3 mx-4">
+            <h5 class="mb-3">
+                Quick note
+            </h5>
+            <div>
+                <textarea class="w-100 postick rounded p-3" [attr.rows]="habitProgress.id > 0 ? 7 : 10" 
+                    [(ngModel)]="habitProgress.note"
+                    name="note"
+                    #note="ngModel"
+                    [attr.placeholder]="edit ? 'Write a quick note...' : '...'"
+                    [disabled]="edit ? false : true"
+                    ></textarea>                
+            </div>
+        </div>
+
+        @if(edit){
+            <div class="text-center mx-4">
+                <button type="submit" class="btn btn-warning w-100">Save</button>
+            </div>
+    
+            @if(habitProgress.id > 0){
+                <div class="text-center mx-4 mt-3">
+                    <button type="button" class="btn btn-danger w-100" (click)="onDeleteHabitProgress()">
+                        Delete
+                    </button>
+                </div>
+            }
+        }
+
+
+    </form>
+</div>
+

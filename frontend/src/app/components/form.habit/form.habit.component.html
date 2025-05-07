@@ -1,0 +1,201 @@
+<div class="card">
+    
+    <div class="card-content">
+        <div class="card-header">
+            <div class="row d-flex">
+                
+                <div class="col align-self-end">
+                    <h4 class="ms-2">{{view == 'view' ? 'Detail habit': view == 'edit' ? 'Edit habit' : 'Create habit'}}</h4>
+                </div>
+
+                <div class="col text-end">
+                    <button type="button" class="btn btn-danger" [routerLink]="[(view == 'view' || view == 'create' ? '/dailyHabits' : '/listHabits')]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form (ngSubmit)="onSubmit(habitForm)" #habitForm="ngForm">
+            <div class="my-3 row">
+                <label for="habit-name" class="col-sm-3 col-form-label"><span style="color: red;">*</span> Name</label>
+                <div class="col">
+                    <input class="form-control" type="text" id="habit-name" placeholder="Name..."
+                        [(ngModel)]="habit.name" name="name"
+                        #name="ngModel"
+                        [disabled]="view == 'view'"
+                    >
+                    @if(errors?.name){
+                        <div class="text-danger">{{errors.name}}</div>
+                    }
+                </div>
+            </div>
+            
+            <div class="my-3 row">
+                <label for="habit-description" class="col-sm-3 col-form-label">Description</label>
+                <div class="col">
+                    <textarea class="form-control" id="habit-description" placeholder="Description..." row="4"
+                        [(ngModel)]="habit.description" name="description"
+                        #description="ngModel"    
+                        [disabled]="view == 'view'"
+                    >
+                    </textarea>
+                </div>
+            </div>
+
+            @if(view == 'view' && !habit.hour){
+            }@else {
+                <div class="my-3 row">
+                    <label for="habit-hour" class="col-2 col-sm-3 col-form-label">Hour</label>
+                    @if(view != "view"){
+                        <div class="form-check form-switch col-2 d-flex justify-content-center align-items-center">
+                            <input class="form-check-input ms-1" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                            [checked]="habit.hour ? true : false "
+                            (change)="onHourAllowed($event)">
+                        </div>
+                    }
+                    <div class="col">
+                        <input class="form-control" id="habit-hour" type="time"
+                            [(ngModel)]="habit.hour" name="hour"
+                            [ngClass]="hourAllowed == true ? 'd-block' : 'd-none'"
+                            #hour="ngModel"
+                            [disabled]="view == 'view'"
+                            [class.disabled-normal]="view == 'view'"
+                        >
+                        @if(errorHour){
+                            <div class="text-danger">Enter the time correctly</div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="card my-3">
+
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-title"><span style="color: red;">*</span> Days</div>
+                    </div>
+                    <div class="card-body">
+
+                        @if(errors?.days){
+                            <div class="alert alert-danger text-center mb-3">{{errors.days}}</div>
+                        }
+
+                        <div class="row">
+
+                            <div class="col ms-5">
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="monday"
+                                            [checked]="habit.days ? habit.days.includes(daysOfWeek.MONDAY) &&
+                                                habit.days.includes(daysOfWeek.TUESDAY) &&
+                                                habit.days.includes(daysOfWeek.WEDNESDAY) &&
+                                                habit.days.includes(daysOfWeek.THURSDAY) &&
+                                                habit.days.includes(daysOfWeek.FRIDAY) &&
+                                                habit.days.includes(daysOfWeek.SATURDAY) &&
+                                                habit.days.includes(daysOfWeek.SUNDAY)
+                                                : null"
+                                            (change)="toggleAllDays()"
+                                            [disabled]="view == 'view'"
+                                    >
+                                    <label class="form-check-label mx-1" for="monday">All Days</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [value]="daysOfWeek.MONDAY" id="monday"
+                                            [checked]="habit.days ? habit.days.includes(daysOfWeek.MONDAY) : null"
+                                            (change)="toggleDay(daysOfWeek.MONDAY)"
+                                            [disabled]="view == 'view'"
+                                    >
+                                    <label class="form-check-label mx-1" for="monday">Monday</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [value]="daysOfWeek.TUESDAY" id="tuesday"
+                                            [checked]="habit.days ? habit.days.includes(daysOfWeek.TUESDAY) : null"
+                                            (change)="toggleDay(daysOfWeek.TUESDAY)"
+                                            [disabled]="view == 'view'"
+                                    >
+                                    <label class="form-check-label mx-1" for="tuesday">Tuesday</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [value]="daysOfWeek.WEDNESDAY" id="wednesday"
+                                            [checked]="habit.days ? habit.days.includes(daysOfWeek.WEDNESDAY) : null"
+                                            (change)="toggleDay(daysOfWeek.WEDNESDAY)"
+                                            [disabled]="view == 'view'"
+                                    >
+                                    <label class="form-check-label mx-1" for="wednesday">Wednesday</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [value]="daysOfWeek.THURSDAY" id="thursday"
+                                            [checked]="habit.days ? habit.days.includes(daysOfWeek.THURSDAY) : null"
+                                            (change)="toggleDay(daysOfWeek.THURSDAY)"
+                                            [disabled]="view == 'view'"
+                                    >
+                                    <label class="form-check-label mx-1" for="thursday">Thursday</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [value]="daysOfWeek.FRIDAY" id="friday"
+                                            [checked]="habit.days ? habit.days.includes(daysOfWeek.FRIDAY) : null"
+                                            (change)="toggleDay(daysOfWeek.FRIDAY)"
+                                            [disabled]="view == 'view'"
+                                    >
+                                    <label class="form-check-label mx-1" for="friday">Friday</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [value]="daysOfWeek.SATURDAY" id="saturday"
+                                            [checked]="habit.days ? habit.days.includes(daysOfWeek.SATURDAY) : null"
+                                            (change)="toggleDay(daysOfWeek.SATURDAY)"
+                                            [disabled]="view == 'view'"
+                                    >
+                                    <label class="form-check-label mx-1" for="saturday">Saturday</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [value]="daysOfWeek.SUNDAY" id="sunday"
+                                            [checked]="habit.days ? habit.days.includes(daysOfWeek.SUNDAY) : null"
+                                            (change)="toggleDay(daysOfWeek.SUNDAY)"
+                                            [disabled]="view == 'view'"
+                                    >
+                                    <label class="form-check-label mx-1" for="sunday">Sunday</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            @if(habit.id > 0){
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button" [class.collapsed]="view == 'view' ? false : true" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#collapseTwo" [attr.aria-expanded]="view == 'view' ? true : false" aria-controls="collapseTwo">
+                            <h4 class="ms-2">Progress</h4>
+                        </button>
+                      </h2>
+                      <div id="collapseTwo" class="accordion-collapse collapse" [class.show]="view == 'view' ? true : false" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <app-calendar-progress [edit]="view == 'view' ? false : true" ></app-calendar-progress>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            }
+            
+            @if(view != 'view'){
+                <div class="my-3">
+                    <input class="form-control btn btn-warning" type="submit" value="Save">
+                </div>
+            }
+        
+        </form>
+
+    </div>
+
+</div>

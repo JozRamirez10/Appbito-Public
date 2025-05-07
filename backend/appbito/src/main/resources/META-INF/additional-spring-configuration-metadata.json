@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "app.verification.email.url",
+    "type": "java.lang.String",
+    "description": "Verification email'"
+  },
+  {
+    "name": "app.image-dir",
+    "type": "java.lang.String",
+    "description": "Images directory"
+  }
+]}

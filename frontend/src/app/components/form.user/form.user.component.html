@@ -1,0 +1,175 @@
+<div class="text-center mt-3 mb-5 d-none d-xl-block">
+    <h1>Appbito</h1>
+</div>
+
+@if(loading){
+    <div class="my-5 alert alert-warning margin-message">
+        <h4 class="text-center mb-5">Creating user, please await one moment...</h4>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+}@else{
+    <div class="card">
+        
+        <div class="card-content">
+            <div class="card-header">
+                <div class="row d-flex">
+                    
+                    <div class="col align-self-end">
+                        <h4 class="ms-2">Register</h4>
+                    </div>
+    
+                    <div class="col text-end">
+                        <button type="button" class="btn btn-danger" [routerLink]="['/login']">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        </button>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    
+        <div class="card-body">
+            
+            <form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
+    
+                <div class="px-4">
+    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="user-name" class="col-form-label">Name</label>
+                            <div class="col">
+                                <input class="form-control" type="text" id="user-name" placeholder="Name..."
+                                [(ngModel)]="user.name" name="name" #name="ngModel" required>
+                                @if(name.invalid && (name.dirty || name.touched || userForm.submitted)){
+                                    @if(name.errors!['required']){
+                                        <div class="text-danger">
+                                            The name is required
+                                        </div>
+                                    }
+                                }
+                                @if(errors?.name){
+                                    <div class="text-danger">{{errors.name}}</div>
+                                }
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-6">
+                            <label for="user-lastname" class="col-form-label">Lastname</label>
+                            <div class="col">
+                                <input class="form-control" type="text" id="user-lastname" placeholder="Lastname..."
+                                [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel" required>
+                                @if(lastname.invalid && (lastname.dirty || lastname.touched || userForm.submitted)){
+                                    @if(lastname.errors!['required']){
+                                        <div class="text-danger">
+                                            The lastname is required
+                                        </div>
+                                    }
+                                }
+                                @if(errors?.lastname){
+                                    <div class="text-danger">{{errors.lastname}}</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="my-2">
+                        <label for="user-date" class="col-sm-3 col-form-label">Date</label>
+                        <div class="col">
+                            <input class="form-control" type="date" id="user-date"
+                            [(ngModel)]="user.date" name="date" #date="ngModel" required>
+                            @if(date.invalid && (date.dirty || date.touched || userForm.submitted)){
+                                @if(date.errors!['required']){
+                                    <div class="text-danger">
+                                        Date is required
+                                    </div>
+                                }
+                            }
+                            @if(errors?.date){
+                                <div class="text-danger">{{errors.date}}</div>
+                            }
+                        </div>
+                    </div>
+        
+                    <div class="my-2">
+                        <label for="user-email" class="col-sm-3 col-form-label">Email</label>
+                        <div class="col">
+                            <input class="form-control" type="email" id="user-email" placeholder="Email..."
+                            [(ngModel)]="user.email" name="email" #email="ngModel" required email>
+                            @if(email.invalid && (email.dirty || email.touched || userForm.submitted)){
+                                @if(email.errors!['required']){
+                                    <div class="text-danger">
+                                        Email is required
+                                    </div>
+                                }
+                            }
+                            @if(email.errors?.['email']){
+                                <div class="text-danger">
+                                    It doesn't have an email format
+                                </div>
+                            }
+                            @if(errors?.email){
+                                <div class="text-danger">{{errors.email}}</div>
+                            }
+                        </div>
+                    </div>
+        
+                    <div class="my-2 mb-4">
+                        <label for="user-password" class="col-sm-3 col-form-label">Password</label>
+                        <div class="col">
+                            <input class="form-control" type="password" id="user-password" placeholder="Password..."
+                            [(ngModel)]="user.password" name="password" #password="ngModel" required minlength="6">
+                            @if(password.invalid && (password.dirty || password.touched || userForm.submitted)){
+                                @if(password.errors!['required']){
+                                    <div class="text-danger">
+                                        Password is required
+                                    </div>
+                                }
+                            }
+                            @if(passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched)){
+                                @if(passwordConfirm.errors!['required']){
+                                    <div class="text-danger">
+                                        Password doesn't macth
+                                    </div>
+                                }
+                            }
+                            @if(password.errors?.['minlength']){
+                                <div class="text-danger">
+                                    The password must be 6 characters long
+                                </div>
+                            }
+                            @if(errors?.password){
+                                <div class="text-danger">{{errors.password}}</div>
+                            }
+                            @if(errorPassConfirm){
+                                <div class="text-danger">Password doesn't match</div>
+                            }
+                        </div>
+                    </div>
+    
+                    <div class="my-2 mb-4">
+                        <label for="user-password-confirm" class="col-sm-3 col-form-label">Confirm password</label>
+                        <div class="col">
+                            <input class="form-control" type="password" id="user-password-confirm" placeholder="Confirm password..."
+                            [(ngModel)]="this.passwordConfirm" name="passwordConfirm" #passwordConfirm="ngModel" required>
+                        </div>
+                    </div>
+        
+                    <div class="my-3">
+                        <input class="form-control btn btn-warning" type="submit" value="Save">
+                    </div>
+    
+                </div>
+    
+            </form>
+    
+        </div>
+    
+    </div>
+}
+

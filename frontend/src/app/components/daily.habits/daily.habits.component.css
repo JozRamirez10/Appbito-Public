@@ -1,0 +1,5 @@
+@media (max-width: 1201px) { /* Para celulares */
+    .card{
+        margin: 0;
+    }
+}
