@@ -36,7 +36,7 @@ Una aplicación web para el control y gestión de hábitos diarios. Permite a lo
 ![Captura de pantalla 2025-05-06 a la(s) 20 43 34](https://github.com/user-attachments/assets/60a7d571-df6f-41ea-aec4-a37a68326f2c)
 
 ## Seguridad
-La aplicación utiliza JWT(JSON Web Token) par autenticar y autorizar a los usuarios. CAda usuario puede ver y gestionar sus propios hábitos.
+La aplicación utiliza JWT(JSON Web Token) para autenticar y autorizar a los usuarios. Cada usuario puede ver y gestionar sus propios hábitos.
 
 ## Licencia 
 Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](./LICENSE) para más información.
